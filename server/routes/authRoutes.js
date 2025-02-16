@@ -14,19 +14,15 @@ router.post('/signup', async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        // Check if email is already in use
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ error: 'Email already in use' });
         }
 
-        // Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Create user
         const user = await User.create({ email, password: hashedPassword });
 
-        // Generate JWT token
         const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: JWT_EXPIRY });
 
         res.status(201).json({ token, user: { id: user._id, email: user.email } });
@@ -36,18 +32,16 @@ router.post('/signup', async (req, res) => {
     }
 });
 
-// Login Route
 router.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
         const user = await User.findOne({ email });
 
-        // Validate user existence and password
         if (!user || !(await bcrypt.compare(password, user.password))) {
             return res.status(401).json({ error: 'Invalid email or password' });
         }
 
-        // Generate JWT token
+        
         const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: JWT_EXPIRY });
 
         res.json({ token, user: { id: user._id, email: user.email } });
@@ -56,10 +50,8 @@ router.post('/login', async (req, res) => {
     }
 });
 
-// Logout Route (Handled Client-Side)
 router.post('/logout', authMiddleware, async (req, res) => {
     try {
-        // JWTs cannot be invalidated without a token blacklist system
         res.json({ message: 'Logged out successfully. Please remove token on the client side.' });
     } catch (error) {
         res.status(500).json({ error: 'Something went wrong. Try again later.' });
