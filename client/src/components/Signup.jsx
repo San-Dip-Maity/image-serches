@@ -7,6 +7,7 @@ function Signup() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const server = import.meta.env.VITE_SERVER_URL
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,7 +18,7 @@ function Signup() {
     }
   
     try {
-      const response = await fetch('http://localhost:5000/api/auth/signup', {
+      const response = await fetch(`${server}/api/auth/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json',
           

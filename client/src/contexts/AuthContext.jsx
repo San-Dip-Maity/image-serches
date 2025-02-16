@@ -5,6 +5,7 @@ const AuthContext = createContext(null);
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem('jwt'));
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
+  const server = import.meta.env.VITE_SERVER_URL
 
   const login = (newToken, userData) => {
     setToken(newToken);
@@ -15,7 +16,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await fetch('http://localhost:5000/api/auth/logout', {
+      await fetch(`${server}/api/auth/logout`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`

@@ -13,6 +13,8 @@ function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
+  const server = import.meta.env.VITE_SERVER_URL
+
   useEffect(() => {
     fetchFolders();
   }, []);
@@ -20,7 +22,7 @@ function Dashboard() {
   const fetchFolders = async () => {
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:5000/api/folders/nested", {
+      const response = await fetch(`${server}/api/folders/nested`, {
         credentials: "include",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -59,7 +61,7 @@ function Dashboard() {
     setLoading(true);
     try {
       const response = await fetch(
-        `http://localhost:5000/api/folders/${folderId}/images`,
+        `${server}/api/folders/${folderId}/images`,
         {
           credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
@@ -83,7 +85,7 @@ function Dashboard() {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/folders", {
+      const response = await fetch(`${server}/api/folders`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -113,7 +115,7 @@ function Dashboard() {
     formData.append("folderId", currentFolder);
 
     try {
-      const response = await fetch("http://localhost:5000/api/images", {
+      const response = await fetch(`${server}http://localhost:5000/api/images`, {
         method: "POST",
         credentials: "include",
         headers: { Authorization: `Bearer ${token}` },
@@ -133,7 +135,7 @@ function Dashboard() {
     setLoading(true);
     try {
       const response = await fetch(
-        `http://localhost:5000/api/images/search?query=${searchQuery}`,
+        `${server}/api/images/search?query=${searchQuery}`,
         {
           credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
