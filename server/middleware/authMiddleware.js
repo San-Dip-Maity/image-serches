@@ -5,11 +5,9 @@ const authMiddleware = async (req, res, next) => {
   try {
     let token;
 
-    // Check for token in cookies first
     if (req.cookies.jwt) {
       token = req.cookies.jwt;
     }
-    // Then check Authorization header
     else if (
       req.headers.authorization &&
       req.headers.authorization.startsWith("Bearer")

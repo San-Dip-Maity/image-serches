@@ -29,7 +29,7 @@ function Signup() {
       const data = await response.json();
   
       if (response.ok) {
-        localStorage.setItem('token', data.token); // Store token
+        localStorage.setItem('token', data.token);
         navigate('/login');
       } else {
         setError(data.error || 'Signup failed');

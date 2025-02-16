@@ -47,7 +47,6 @@ const buildNestedFolders = async (userId, parentId = null) => {
 
 router.get("/nested", authenticateUser, async (req, res) => {
   try {
-    // Debug logging
     console.log("Request user object:", req.user);
 
     if (!req.user) {
@@ -98,7 +97,6 @@ router.get("/:folderId", authenticateUser, async (req, res) => {
   try {
     const { folderId } = req.params;
 
-    // Add MongoDB ObjectId validation
     if (!mongoose.Types.ObjectId.isValid(folderId)) {
       return res.status(400).json({ message: "Invalid folder ID format" });
     }

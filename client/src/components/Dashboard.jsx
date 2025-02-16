@@ -26,12 +26,10 @@ function Dashboard() {
         credentials: "include",
         headers: {
           Authorization: `Bearer ${token}`,
-          // Add Accept header for explicit JSON response
           Accept: "application/json",
         },
       });
 
-      // Log response details for debugging
       console.log("Response status:", response.status);
       console.log("Response headers:", Object.fromEntries(response.headers));
 
@@ -43,7 +41,7 @@ function Dashboard() {
       }
 
       const data = await response.json();
-      console.log("Folders data:", data); // Debug log
+      console.log("Folders data:", data); 
       setFolders(data);
     } catch (error) {
       console.error("Error fetching folders:", {
@@ -171,12 +169,9 @@ function Dashboard() {
               📁 {folder.name}
             </div>
 
-            {/* Render children folders recursively */}
             {folder.children &&
               folder.children.length > 0 &&
               renderFolders(folder.children, folder._id)}
-
-            {/* Add folder button inside each folder */}
             <div className="ml-4 mt-2">
               <button
                 onClick={() => createFolder(folder._id)}
@@ -211,7 +206,6 @@ function Dashboard() {
         )}
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 sm:gap-6 md:gap-8">
-          {/* Folders Section */}
           <div className="lg:col-span-2 bg-white p-4 rounded-lg shadow">
             <h2 className="text-xl font-bold mb-4">Folders</h2>
             <div className="space-y-4">
@@ -235,7 +229,6 @@ function Dashboard() {
             </div>
           </div>
 
-          {/* Images Section */}
           <div className="lg:col-span-3 bg-white p-4 rounded-lg shadow">
             <h2 className="text-xl font-bold mb-4">Images</h2>
             <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 mb-4">
@@ -273,7 +266,6 @@ function Dashboard() {
               </div>
             )}
 
-            {/* Upload Image */}
             <div className="mt-6">
               <h3 className="text-lg font-bold mb-2">Upload Image</h3>
               <div className="space-y-2">
